@@ -1,61 +1,65 @@
-import os
 from pathlib import Path
-import logging
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] - %(levelname)s - %(name)s - %(message)s'
-)
 
-project_name = "wineQuality"
+def create_project_structure(proj_name):
+    base_paths = [
+        Path(f"src/{proj_name}/components"),
+        Path(f"src/{proj_name}/utils"),
+        Path(f"src/{proj_name}/config"),
+        Path(f"src/{proj_name}/pipeline"),
+        Path(f"src/{proj_name}/entity"),
+        Path(f"src/{proj_name}/constants"),
+        Path("config"),
+        Path("research"),
+        Path("templates"),
+    ]
 
-list_of_dir = [
-    f"src/{project_name}/__init__.py",
-    f"src/{project_name}/components/__init__.py",
-    f"src/{project_name}/components/data_ingestion.py",
-    f"src/{project_name}/components/data_transformation.py",
-    f"src/{project_name}/components/data_validation.py",
-    f"src/{project_name}/components/model_evaluation.py",
-    f"src/{project_name}/components/model_trainer.py",
-    f"src/{project_name}/utils/__init__.py",
-    f"src/{project_name}/utils/common.py",
-    f"src/{project_name}/config/__init__.py",
-    f"src/{project_name}/config/configuration.py",
-    f"src/{project_name}/pipeline/__init__.py",
-    f"src/{project_name}/pipeline/prediction.py",
-    f"src/{project_name}/pipeline/stage_01_data_ingestion.py",
-    f"src/{project_name}/pipeline/stage_02_data_validation.py",
-    f"src/{project_name}/pipeline/stage_03_data_transformation.py",
-    f"src/{project_name}/pipeline/stage_04_model_trainer.py",
-    f"src/{project_name}/pipeline/stage_05_model_evaluation.py",
-    f"src/{project_name}/entity/__init__.py",
-    f"src/{project_name}/entity/config_entity.py",
-    f"src/{project_name}/constants/__init__.py",
-    "config/config.yaml",
-    "params.yaml",
-    "schema.yaml",
-    "main.py",
-    "app.py",
-    "requirements.txt",
-    "setup.py",
-    "research/trials.ipynb",
-    "templates/index.html"
+    files_with_paths = [
+        Path(f"src/{proj_name}/__init__.py"),
+        Path(f"src/{proj_name}/components/__init__.py"),
+        Path(f"src/{proj_name}/components/data_ingestion.py"),
+        Path(f"src/{proj_name}/components/data_transformation.py"),
+        Path(f"src/{proj_name}/components/data_validation.py"),
+        Path(f"src/{proj_name}/components/model_evaluation.py"),
+        Path(f"src/{proj_name}/components/model_trainer.py"),
+        Path(f"src/{proj_name}/utils/__init__.py"),
+        Path(f"src/{proj_name}/utils/common.py"),
+        Path(f"src/{proj_name}/config/__init__.py"),
+        Path(f"src/{proj_name}/config/configuration.py"),
+        Path(f"src/{proj_name}/pipeline/__init__.py"),
+        Path(f"src/{proj_name}/pipeline/prediction.py"),
+        Path(f"src/{proj_name}/pipeline/stage_01_data_ingestion.py"),
+        Path(f"src/{proj_name}/pipeline/stage_02_data_validation.py"),
+        Path(f"src/{proj_name}/pipeline/stage_03_data_transformation.py"),
+        Path(f"src/{proj_name}/pipeline/stage_04_model_trainer.py"),
+        Path(f"src/{proj_name}/pipeline/stage_05_model_evaluation.py"),
+        Path(f"src/{proj_name}/entity/__init__.py"),
+        Path(f"src/{proj_name}/entity/config_entity.py"),
+        Path(f"src/{proj_name}/constants/__init__.py"),
+        Path("config/config.yaml"),
+        Path("params.yaml"),
+        Path("schema.yaml"),
+        Path("main.py"),
+        Path("app.py"),
+        Path("requirements.txt"),
+        Path("setup.py"),
+        Path("research/trials.ipynb"),
+        Path("templates/index.html"),
+    ]
 
-]
+    # Create directories
+    for path in base_paths:
+        path.mkdir(parents=True, exist_ok=True)
 
-for filepath_str in list_of_dir:
-    filepath = Path(filepath_str)
+    # Create files
+    for file_path in files_with_paths:
+        file_path.parent.mkdir(parents=True, exist_ok=True)  # Ensure directory exists
+        file_path.touch(exist_ok=True)  # Create file if it doesn't exist, do nothing
+        # if it does
 
-    # Ensure the directory exists
-    if not filepath.parent.exists():
-        filepath.parent.mkdir(parents=True, exist_ok=True)
-        logging.info(
-            f"Created directory: {filepath.parent} for the file: {filepath.name}"
-        )
+    print(f"Project structure for '{proj_name}' created successfully.")
 
-    # Check if file exists and is not empty
-    if not filepath.exists() or filepath.stat().st_size == 0:
-        filepath.touch()  # This creates an empty file if it doesn't exist
-        logging.info(f"Created empty file: {filepath}")
-    else:
-        logging.info(f"File already exists: {filepath}")
+
+if __name__ == "__main__":
+    project_name = "wineQuality"  # Set your project name here
+    create_project_structure(project_name)
